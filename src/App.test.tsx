@@ -57,4 +57,20 @@ describe("button and checkbox", () => {
 
     expect(button).toBeDisabled();
   });
+
+  test("when checkbox is clicked twice, the button is enabled again", () => {
+    render(<App />);
+
+    const checkbox = screen.getByRole("checkbox", { name: /disable button/i });
+
+    fireEvent.click(checkbox);
+
+    const button = screen.getByRole("button", { name: /change to blue/i });
+
+    expect(button).toBeDisabled();
+
+    fireEvent.click(checkbox);
+
+    expect(button).toBeEnabled();
+  });
 });
