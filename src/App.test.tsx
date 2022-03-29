@@ -1,4 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
+import exp from "constants";
 import App from "./App";
 
 describe("button color and text change", () => {
@@ -49,7 +50,7 @@ describe("button and checkbox", () => {
   test("when checkbox is clicked, the button is disabled", () => {
     render(<App />);
 
-    const checkbox = screen.getByRole("checkbox");
+    const checkbox = screen.getByRole("checkbox", { name: /disable button/i });
 
     fireEvent.click(checkbox);
 
@@ -72,5 +73,41 @@ describe("button and checkbox", () => {
     fireEvent.click(checkbox);
 
     expect(button).toBeEnabled();
+  });
+
+  test("when button is disabled its color is gray", () => {
+    render(<App />);
+    const checkbox = screen.getByRole("checkbox", { name: /disable button/i });
+
+    const button = screen.getByRole("button", { name: /change to blue/i });
+
+    expect(button).toHaveStyle({ backgroundColor: "red" });
+
+    fireEvent.click(checkbox);
+
+    expect(button).toHaveStyle({ backgroundColor: "gray" });
+  });
+
+  test("after clicking button and checkbox twice, the button is blue", () => {
+    render(<App />);
+
+    const checkbox = screen.getByRole("checkbox", { name: /disable button/i });
+    const button = screen.getByRole("button", { name: /change to blue/i });
+
+    fireEvent.click(button);
+
+    expect(button).toHaveStyle({ backgroundColor: "blue" });
+
+    fireEvent.click(checkbox);
+
+    expect(button).toHaveStyle({ backgroundColor: "gray" });
+
+    fireEvent.click(checkbox);
+
+    expect(button).toHaveStyle({ backgroundColor: "blue" });
+
+    fireEvent.click(button);
+
+    expect(button).toHaveStyle({ backgroundColor: "red" });
   });
 });
