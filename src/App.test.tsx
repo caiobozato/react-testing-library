@@ -1,6 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import exp from "constants";
-import App from "./App";
+import App, { addSpacesCamelCase } from "./App";
 
 describe("button color and text change", () => {
   test("button has correct initial color", () => {
@@ -109,5 +108,19 @@ describe("button and checkbox", () => {
     fireEvent.click(button);
 
     expect(button).toHaveStyle({ backgroundColor: "red" });
+  });
+});
+
+describe("add spaces in camel-case function tests", () => {
+  test("Works for no inner capital letters", () => {
+    expect(addSpacesCamelCase("Red")).toBe("Red");
+  });
+
+  test("Works for one inner capital letters", () => {
+    expect(addSpacesCamelCase("MidnightBlue")).toBe("Midnight Blue");
+  });
+
+  test("Works for multiple inner capital letters", () => {
+    expect(addSpacesCamelCase("MediumVioletRed")).toBe("Medium Violet Red");
   });
 });
