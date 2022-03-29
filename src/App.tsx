@@ -1,24 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
 
 function App() {
+  const [color, setColor] = useState("red");
+  const [disabled, setDisabled] = useState(false);
+
+  function changeColor() {
+    const newColor = color === "red" ? "blue" : "red";
+    setColor(newColor);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <button
+        disabled={disabled}
+        style={{ backgroundColor: color }}
+        onClick={changeColor}
+      >
+        Change to {color === "red" ? "blue" : "red"}
+      </button>
+      <input type="checkbox" onClick={() => setDisabled(!disabled)} />
     </div>
   );
 }
